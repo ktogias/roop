@@ -1,0 +1,3 @@
+[submodule "roop-unleashed"]
+	path = roop-unleashed
+	url = git@github.com:C0untFloyd/roop-unleashed.git
