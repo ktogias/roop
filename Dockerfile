@@ -44,6 +44,9 @@ RUN mkdir -p /app/models/Frame /app/models/CLIP /app/models/CodeFormer && \
     -o /app/models/restoreformer_plus_plus.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/restoreformer_plus_plus.onnx \
     -o /app/models/xseg.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/xseg.onnx
 
+# Copy settings
+COPY settings.py /app/settings.py   
+
 # Create a non-root user
 RUN useradd -m appuser
 
