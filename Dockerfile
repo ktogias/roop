@@ -29,20 +29,20 @@ COPY roop-unleashed/ /app/
 
 # Add models
 RUN mkdir -p /app/models/Frame /app/models/CLIP /app/models/CodeFormer && \
-    curl -L -o /app/models/Frame/deoldify_artistic.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/deoldify_artistic.onnx && \
-    curl -L -o /app/models/Frame/deoldify_stable.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/deoldify_stable.onnx && \
-    curl -L -o /app/models/Frame/isnet-general-use.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/isnet-general-use.onnx && \
-    curl -L -o /app/models/Frame/lsdir_x4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/lsdir_x4.onnx && \
-    curl -L -o /app/models/Frame/real_esrgan_x2.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/real_esrgan_x2.onnx && \
-    curl -L -o /app/models/Frame/real_esrgan_x4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/real_esrgan_x4.onnx && \
-    curl -L -o /app/models/CLIP/rd64-uni-refined.pth https://huggingface.co/countfloyd/deepfake/resolve/main/rd64-uni-refined.pth && \
-    curl -L -o /app/models/CodeFormer/CodeFormerv0.1.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/CodeFormerv0.1.onnx && \
-    curl -L -o /app/models/DMDNet.pth https://github.com/csxmli2016/DMDNet/releases/download/v1/DMDNet.pth && \
-    curl -L -o /app/models/GFPGANv1.4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/GFPGANv1.4.onnx && \
-    curl -L -o /app/models/GPEN-BFR-512.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/GPEN-BFR-512.onnx && \
-    curl -L -o /app/models/inswapper_128.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/inswapper_128.onnx && \
-    curl -L -o /app/models/restoreformer_plus_plus.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/restoreformer_plus_plus.onnx && \
-    curl -L -o /app/models/xseg.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/xseg.onnx
+    curl -L -Z -o /app/models/Frame/deoldify_artistic.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/deoldify_artistic.onnx \
+    -o /app/models/Frame/deoldify_stable.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/deoldify_stable.onnx \
+    -o /app/models/Frame/isnet-general-use.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/isnet-general-use.onnx \
+    -o /app/models/Frame/lsdir_x4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/lsdir_x4.onnx \
+    -o /app/models/Frame/real_esrgan_x2.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/real_esrgan_x2.onnx \
+    -o /app/models/Frame/real_esrgan_x4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/real_esrgan_x4.onnx \
+    -o /app/models/CLIP/rd64-uni-refined.pth https://huggingface.co/countfloyd/deepfake/resolve/main/rd64-uni-refined.pth \
+    -o /app/models/CodeFormer/CodeFormerv0.1.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/CodeFormerv0.1.onnx \
+    -o /app/models/DMDNet.pth https://github.com/csxmli2016/DMDNet/releases/download/v1/DMDNet.pth \
+    -o /app/models/GFPGANv1.4.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/GFPGANv1.4.onnx \
+    -o /app/models/GPEN-BFR-512.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/GPEN-BFR-512.onnx \
+    -o /app/models/inswapper_128.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/inswapper_128.onnx \
+    -o /app/models/restoreformer_plus_plus.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/restoreformer_plus_plus.onnx \
+    -o /app/models/xseg.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/xseg.onnx
 
 # Create a non-root user
 RUN useradd -m appuser
