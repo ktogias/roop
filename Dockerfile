@@ -1,5 +1,4 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM ultralytics/ultralytics:latest
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
