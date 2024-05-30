@@ -1,17 +1,28 @@
-FROM ultralytics/ultralytics:latest
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu20.04
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary build tools and libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.9 \
+    python3-pip \
+    python3-setuptools \
+    python3.9-dev \
     gcc \
     build-essential \
     libgl1-mesa-glx \
     libglib2.0-0 \
     ffmpeg \
+    tzdata \
     curl \
+    unzip \
+    libcufft10 \
     && rm -rf /var/lib/apt/lists/*
+
+# Set the timezone to UTC
+RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 # Create a directory for the app
 WORKDIR /app
@@ -20,8 +31,8 @@ WORKDIR /app
 COPY roop-unleashed/requirements.txt /app/
 
 # Install dependencies
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN python3.9 -m pip install --upgrade pip && \
+    python3.9 -m pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the image
 COPY roop-unleashed/ /app/
@@ -41,7 +52,10 @@ RUN mkdir -p /app/models/Frame /app/models/CLIP /app/models/CodeFormer && \
     -o /app/models/GPEN-BFR-512.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/GPEN-BFR-512.onnx \
     -o /app/models/inswapper_128.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/inswapper_128.onnx \
     -o /app/models/restoreformer_plus_plus.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/restoreformer_plus_plus.onnx \
-    -o /app/models/xseg.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/xseg.onnx
+    -o /app/models/xseg.onnx https://huggingface.co/countfloyd/deepfake/resolve/main/xseg.onnx \
+    -o /app/models/buffalo_l.zip https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_l.zip
+
+RUN unzip /app/models/buffalo_l.zip -d /app/models/buffalo_l
 
 # Copy settings
 COPY settings.py /app/settings.py   
@@ -59,4 +73,4 @@ RUN chown -R appuser /app
 USER appuser
 
 # Command to run the application
-CMD ["python", "run.py"]
+CMD ["python3.9", "run.py"]

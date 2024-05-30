@@ -23,6 +23,7 @@ docker build -t "${IMAGE}" .
 run_docker() {
     local entrypoint=${1:-""}
     local options=(
+        -p 7860:7860
     )
     [[ -n "$entrypoint" ]] && options+=(
       -it
