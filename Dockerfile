@@ -60,6 +60,9 @@ RUN unzip /app/models/buffalo_l.zip -d /app/models/buffalo_l
 # Copy settings
 COPY settings.py /app/settings.py   
 
+#ln libcufft.so
+RUN ln -s /usr/local/cuda-12/lib64/libcufft.so.11 /usr/local/cuda-12/lib64/libcufft.so.10
+
 # Create a non-root user
 RUN useradd -m appuser
 
