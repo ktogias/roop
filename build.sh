@@ -24,6 +24,7 @@ run_docker() {
     local entrypoint=${1:-""}
     local options=(
         -p 7860:7860
+        --gpus all
     )
     [[ -n "$entrypoint" ]] && options+=(
       -it

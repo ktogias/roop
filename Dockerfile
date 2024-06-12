@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu20.04
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -6,10 +6,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary build tools and libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.9 \
+    python3.10 \
     python3-pip \
     python3-setuptools \
-    python3.9-dev \
+    python3.10-dev \
     gcc \
     build-essential \
     libgl1-mesa-glx \
@@ -31,8 +31,8 @@ WORKDIR /app
 COPY roop-unleashed/requirements.txt /app/
 
 # Install dependencies
-RUN python3.9 -m pip install --upgrade pip && \
-    python3.9 -m pip install --no-cache-dir -r requirements.txt
+RUN python3.10 -m pip install --upgrade pip && \
+    python3.10 -m pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the image
 COPY roop-unleashed/ /app/
@@ -61,7 +61,9 @@ RUN unzip /app/models/buffalo_l.zip -d /app/models/buffalo_l
 COPY settings.py /app/settings.py   
 
 #ln libcufft.so
-RUN ln -s /usr/local/cuda-12/lib64/libcufft.so.11 /usr/local/cuda-12/lib64/libcufft.so.10
+#RUN ln -s /usr/local/cuda-12/lib64/libcufft.so.11 /usr/local/cuda-12/lib64/libcufft.so.10
+RUN ln -s /usr/local/cuda-11/lib64/libnvrtc.so.11.8.89 /usr/local/cuda-11/lib64/libnvrtc.so
+
 
 # Create a non-root user
 RUN useradd -m appuser
@@ -76,4 +78,4 @@ RUN chown -R appuser /app
 USER appuser
 
 # Command to run the application
-CMD ["python3.9", "run.py"]
+CMD ["python3.10", "run.py"]
